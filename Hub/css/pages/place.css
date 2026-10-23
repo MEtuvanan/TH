@@ -1,6 +1,0 @@
-.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .75rem; margin: 1rem 0 2rem; }
-.gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-medium); }
-.gallery:empty { display: none; }
-.place-map { height: 360px; border-radius: var(--radius-medium); background: var(--color-surface-soft); }
-.facts dt { font-weight: 600; margin-top: .75rem; }
-.facts dd { margin: 0; }
