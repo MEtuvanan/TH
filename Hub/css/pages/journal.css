@@ -1,0 +1,81 @@
+/* Journal Page Styles 2.0 */
+.journal-bar {
+  display: grid;
+  gap: .85rem;
+  align-items: end;
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-soft);
+}
+@media (min-width: 768px) {
+  .journal-bar {
+    grid-template-columns: 1fr 1fr 2fr auto;
+  }
+}
+.journal-bar .form-field { margin: 0; }
+
+.entry {
+  padding: 1.75rem;
+  border-radius: var(--radius-medium);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+}
+.entry:hover {
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-border-hover);
+}
+.entry h2 {
+  font-size: 1.35rem;
+  margin: 0 0 .35rem;
+  color: var(--color-forest);
+}
+.entry-actions {
+  display: flex;
+  gap: .65rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: .75rem;
+  margin: 1.25rem 0;
+}
+.thumbs figure {
+  margin: 0;
+  border-radius: var(--radius-small);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-soft);
+  box-shadow: var(--shadow-soft);
+}
+.thumbs img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  transition: transform .3s ease;
+}
+.thumbs figure:hover img {
+  transform: scale(1.05);
+}
+.thumbs figcaption {
+  font-size: .75rem;
+  color: var(--color-text-muted);
+  padding: .35rem .5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+dialog.editor {
+  width: min(680px, 94vw);
+  max-height: 92vh;
+}

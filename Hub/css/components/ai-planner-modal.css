@@ -1,0 +1,594 @@
+/* ================================================================
+   Floating AI Trip Planner Modal — Explore Page Widget
+   Modern glassmorphic floating popup with prompt-to-form AI engine
+   ================================================================ */
+
+/* ── Floating Action Button (FAB) ────────────────────────────── */
+.ai-fab-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .5rem;
+}
+
+.ai-fab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .85rem 1.35rem;
+  background: linear-gradient(135deg, #0B251B 0%, #00A86B 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px -5px rgba(0, 168, 107, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.ai-fab-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 30px -5px rgba(0, 168, 107, 0.55), 0 10px 12px -5px rgba(0, 0, 0, 0.15);
+}
+
+.ai-fab-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.ai-fab-sparkle {
+  font-size: 1.25rem;
+  animation: ai-pulse 2s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes ai-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(10deg); }
+}
+
+.ai-fab-badge {
+  background: #EF4444;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 800;
+  padding: .15rem .45rem;
+  border-radius: 9999px;
+  letter-spacing: .5px;
+}
+
+/* ── Floating Modal Window ────────────────────────────────────── */
+.ai-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 37, 27, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1001;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.ai-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ai-modal-card {
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 3rem);
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 168, 107, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(11, 37, 27, 0.35), 0 0 0 1px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.98);
+  transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+.ai-modal-overlay.open .ai-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+/* ── Modal Header ────────────────────────────────────────────── */
+.ai-modal-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #0B251B 0%, #154332 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  position: relative;
+}
+
+.ai-modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.ai-modal-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #00A86B, #34D399);
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4);
+}
+
+.ai-modal-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.ai-modal-header p {
+  margin: .15rem 0 0 0;
+  font-size: .78rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ai-modal-close-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  transition: all .2s;
+}
+
+.ai-modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* ── Modal Body / Content ────────────────────────────────────── */
+.ai-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  background: #FAFAFA;
+}
+
+/* ── STEP 1: Prompt Input View ───────────────────────────────── */
+.ai-step-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ai-prompt-lead {
+  font-size: .92rem;
+  color: #4A5568;
+  line-height: 1.5;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  padding: .85rem 1rem;
+  border-radius: 14px;
+}
+
+.ai-textarea-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.ai-textarea {
+  width: 100%;
+  padding: 1rem 1.15rem;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: .95rem;
+  line-height: 1.5;
+  color: #1A202C;
+  resize: vertical;
+  min-height: 110px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  transition: all .2s ease;
+  box-sizing: border-box;
+}
+
+.ai-textarea:focus {
+  outline: none;
+  border-color: #00A86B;
+  box-shadow: 0 0 0 4px rgba(0, 168, 107, 0.12);
+}
+
+.ai-tags-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.ai-tags-title {
+  font-size: .8rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.ai-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.ai-tag-btn {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  color: #2D3748;
+  padding: .4rem .75rem;
+  border-radius: 9999px;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: all .15s ease;
+  font-family: inherit;
+}
+
+.ai-tag-btn:hover {
+  border-color: #00A86B;
+  color: #007A4D;
+  background: #F0FDF4;
+  transform: translateY(-1px);
+}
+
+.ai-btn-primary {
+  width: 100%;
+  padding: .9rem 1.25rem;
+  background: linear-gradient(135deg, #00A86B 0%, #007A4D 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 168, 107, 0.35);
+  transition: all .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  font-family: inherit;
+}
+
+.ai-btn-primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 6px 18px rgba(0, 168, 107, 0.45);
+  transform: translateY(-1px);
+}
+
+/* ── STEP 2: Generated Form View ─────────────────────────────── */
+.ai-step-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ai-insight-box {
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: 14px;
+  padding: .85rem 1.15rem;
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+}
+
+.ai-insight-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.ai-insight-text {
+  font-size: .84rem;
+  color: #065F46;
+  line-height: 1.45;
+}
+
+.ai-insight-text strong {
+  color: #047857;
+  display: block;
+  margin-bottom: .2rem;
+  font-size: .88rem;
+}
+
+.ai-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .85rem;
+}
+
+.ai-field-full {
+  grid-column: span 2;
+}
+
+.ai-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.ai-form-group label {
+  font-size: .8rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.ai-input, .ai-select {
+  width: 100%;
+  padding: .65rem .85rem;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: .88rem;
+  color: #1F2937;
+  box-sizing: border-box;
+  transition: border-color .15s;
+}
+
+.ai-input:focus, .ai-select:focus {
+  outline: none;
+  border-color: #00A86B;
+}
+
+.ai-check-group {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  padding: .7rem .9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #1F2937;
+  user-select: none;
+}
+
+.ai-check-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #00A86B;
+  cursor: pointer;
+}
+
+.ai-form-actions {
+  display: flex;
+  gap: .65rem;
+  margin-top: .5rem;
+}
+
+.ai-btn-secondary {
+  flex: 1;
+  padding: .85rem 1rem;
+  background: #F3F4F6;
+  border: 1px solid #D1D5DB;
+  color: #374151;
+  border-radius: 14px;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+
+.ai-btn-secondary:hover {
+  background: #E5E7EB;
+}
+
+/* ── Loading Spinner State ───────────────────────────────────── */
+.ai-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.ai-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #E2E8F0;
+  border-top-color: #00A86B;
+  border-radius: 50%;
+  animation: ai-spin 0.8s linear infinite;
+}
+
+@keyframes ai-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ai-loading-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0B251B;
+}
+
+.ai-loading-subtitle {
+  font-size: .85rem;
+  color: #6B7280;
+  max-width: 320px;
+}
+
+/* ── STEP 3: Itinerary Result View ───────────────────────────── */
+.ai-step-itinerary {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ai-trip-header {
+  background: linear-gradient(135deg, #0B251B, #1B4D3E);
+  color: #fff;
+  padding: 1.15rem;
+  border-radius: 16px;
+}
+
+.ai-trip-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 .35rem 0;
+}
+
+.ai-trip-summary {
+  font-size: .85rem;
+  color: rgba(255,255,255,.85);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.ai-day-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.ai-day-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0B251B;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  border-bottom: 1px solid #F3F4F6;
+  padding-bottom: .5rem;
+  margin: 0;
+}
+
+.ai-stop-item {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  padding: .75rem .85rem;
+  background: #F9FAFB;
+  border-radius: 12px;
+  border-left: 3.5px solid #00A86B;
+}
+
+.ai-stop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.ai-stop-name {
+  font-size: .92rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.ai-stop-time {
+  font-size: .75rem;
+  font-weight: 700;
+  color: #007A4D;
+  background: #D1FAE5;
+  padding: .15rem .45rem;
+  border-radius: 6px;
+}
+
+.ai-stop-why {
+  font-size: .8rem;
+  color: #4B5563;
+  line-height: 1.4;
+}
+
+.ai-stop-actions {
+  display: flex;
+  gap: .45rem;
+  margin-top: .35rem;
+}
+
+.ai-stop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .3rem .65rem;
+  border-radius: 6px;
+  font-size: .75rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+
+.ai-btn-nav {
+  background: #00A86B;
+  color: #fff;
+}
+
+.ai-btn-nav:hover {
+  background: #007A4D;
+}
+
+.ai-btn-view {
+  background: #E5E7EB;
+  color: #374151;
+}
+
+.ai-btn-view:hover {
+  background: #D1D5DB;
+}
+
+/* ── Mobile Responsive ───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ai-fab-container {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+  .ai-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .ai-modal-card {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+  }
+  .ai-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .ai-field-full {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travel calendar — Travel and Challenge</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/desktop.css">
+<link rel="stylesheet" href="/css/mobile.css">
+<link rel="stylesheet" href="/css/pages/calendar.css">
+</head>
+<body data-protected="true">
+<nav id="site-nav" aria-label="Main"></nav>
+<main class="section"><div class="container">
+  <h1>Travel calendar</h1>
+  <div class="cal-head">
+    <button class="btn btn-secondary btn-small" id="prev" type="button" aria-label="Previous month">‹</button>
+    <h2 id="month" aria-live="polite"></h2>
+    <button class="btn btn-secondary btn-small" id="next" type="button" aria-label="Next month">›</button>
+  </div>
+  <p class="meta legend"><span class="dot d-diary"></span> Diary <span class="dot d-photo"></span> Photos <span class="dot d-quest"></span> Quest <span class="dot d-trip"></span> Trip</p>
+  <div id="grid" class="cal-grid" role="grid" aria-label="Calendar"></div>
+  <section aria-live="polite"><h2 id="day-title" style="margin-top:2rem">Select a day</h2><div id="day" class="stack"></div></section>
+</div></main>
+<footer id="site-footer"></footer>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/calendar.js"></script>
+</body>
+</html>

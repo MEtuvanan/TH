@@ -1,0 +1,121 @@
+/* Explore Page Styles 2.0 */
+.explore {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 65px);
+  background: var(--color-surface-soft);
+}
+
+.filters {
+  display: grid;
+  gap: .85rem;
+  padding: 1.1rem 4%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 12px rgba(11, 37, 27, 0.04);
+  position: relative;
+  z-index: 10;
+}
+.filters .form-field { margin: 0; }
+.filters label { font-size: .8rem; font-weight: 700; color: var(--color-forest); }
+.filters input, .filters select {
+  min-height: 42px;
+  border-radius: var(--radius-small);
+  background: #fff;
+}
+
+.explore-body {
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 1;
+}
+
+.map-pane {
+  height: 48vh;
+  min-height: 300px;
+  position: relative;
+  background: #E8F0EC;
+}
+.map {
+  width: 100%;
+  height: 100%;
+  background: #E8F0EC;
+}
+
+.list-pane {
+  padding: 1.25rem 4%;
+  background: var(--color-surface-soft);
+}
+.place-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .9rem;
+}
+.place-list li {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  padding: 1.15rem;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.place-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-border-hover);
+}
+.place-list li[aria-current=true] {
+  border-color: var(--color-emerald);
+  box-shadow: 0 0 0 3px rgba(0, 168, 107, 0.2), var(--shadow-medium);
+  background: #FAFDFC;
+}
+.place-list h2 {
+  font-size: 1.15rem;
+  margin: 0 0 .35rem;
+  font-weight: 700;
+}
+.place-list h2 a {
+  color: var(--color-forest);
+}
+.place-list h2 a:hover {
+  color: var(--color-emerald);
+}
+.place-list .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: .6rem;
+}
+.place-list .meta {
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .filters {
+    grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr;
+    align-items: end;
+  }
+  .explore-body {
+    flex-direction: row;
+    height: calc(100vh - 65px - 78px);
+    overflow: hidden;
+  }
+  .list-pane {
+    width: 420px;
+    flex: none;
+    overflow-y: auto;
+    padding: 1.5rem;
+    border-right: 1px solid var(--color-border);
+  }
+  .map-pane {
+    flex: 1;
+    height: auto;
+  }
+}

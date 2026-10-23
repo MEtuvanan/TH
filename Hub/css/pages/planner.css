@@ -1,0 +1,125 @@
+/* Planner Page Styles 2.0 */
+.planner {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 1000px) {
+  .planner {
+    grid-template-columns: 400px 1fr;
+    align-items: start;
+  }
+}
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .85rem;
+}
+.check {
+  display: flex;
+  gap: .65rem;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-forest);
+}
+.planner-map {
+  height: 440px;
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.day {
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+}
+.day:first-child {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+.day h3 {
+  font-size: 1.2rem;
+  margin-bottom: .75rem;
+  color: var(--color-forest);
+}
+
+.stop {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .75rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  margin-bottom: .75rem;
+  background: var(--color-surface-soft);
+  transition: var(--transition);
+}
+.stop:hover {
+  background: #fff;
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-soft);
+}
+.stop-ctl {
+  display: flex;
+  gap: .35rem;
+  align-items: start;
+}
+.stop-ctl button {
+  min-width: 38px;
+  min-height: 38px;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  transition: var(--transition);
+}
+.stop-ctl button:hover:not(:disabled) {
+  border-color: var(--color-emerald);
+  color: var(--color-emerald);
+  background: var(--color-emerald-tint);
+}
+.stop-ctl button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.actions {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin: 1.25rem 0;
+}
+.saved {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: .5rem;
+}
+.saved button {
+  width: 100%;
+  text-align: left;
+  min-height: 44px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  padding: .6rem .85rem;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.saved button:hover {
+  border-color: var(--color-emerald);
+  color: var(--color-emerald-deep);
+  background: var(--color-emerald-tint);
+}
